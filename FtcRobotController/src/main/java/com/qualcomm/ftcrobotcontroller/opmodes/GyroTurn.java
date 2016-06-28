@@ -1,7 +1,11 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-/**
- * Created by Noah on 6/27/2016.
- */
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
+
 public class GyroTurn {
+    GyroSensor gyroSensor;
+    protected void GyroTurn(GyroSensor gyroArg, DcMotor leftMotorArg, DcMotor rightMotorArg) {
+
+    }
 }

@@ -1,7 +1,12 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-/**
- * Created by Noah on 6/27/2016.
- */
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 public class MotorDirection {
+    public enum LeftMotorDirection {
+        FORWARD, BACKWARD
+    }
+    public enum RightMotorDirection {
+        FORWARD, BACKWARD
+    }
 }

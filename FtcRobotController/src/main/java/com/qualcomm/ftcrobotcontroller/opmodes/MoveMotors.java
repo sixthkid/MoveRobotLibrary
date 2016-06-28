@@ -4,255 +4,164 @@ public class MoveMotors {
     protected DcMotor leftMotor;
     protected DcMotor rightMotor;
     protected Continue StopFor;
+    protected Variable Veribul;
     protected void MoveMotor(DcMotor LeftDriveMotorReferences, DcMotor RightDriveMotorReferences, Continue StopForReferences) {
         leftMotor = LeftDriveMotorReferences;
         rightMotor = RightDriveMotorReferences;
         StopFor = StopForReferences;
     }
-/****************************************************************************************/
+    protected void MoveMotor(DcMotor LeftDriveMotorReferences, DcMotor RightDriveMotorReferences, Continue StopForReferences, MotorDirection.RightMotorDirection rightMotorDirection) {
+        leftMotor = LeftDriveMotorReferences;
+        rightMotor = RightDriveMotorReferences;
+        if(rightMotorDirection == MotorDirection.RightMotorDirection.FORWARD) {
+            leftMotor.setDirection(DcMotor.Direction.FORWARD);
+        }
+        else {
+            leftMotor.setDirection(DcMotor.Direction.REVERSE);
+        }
+        StopFor = StopForReferences;
+    }
+    protected void MoveMotor(DcMotor LeftDriveMotorReferences, DcMotor RightDriveMotorReferences, Continue StopForReferences, MotorDirection.LeftMotorDirection leftMotorDirection) {
+        leftMotor = LeftDriveMotorReferences;
+        rightMotor = RightDriveMotorReferences;
+        if(leftMotorDirection == MotorDirection.LeftMotorDirection.FORWARD) {
+            leftMotor.setDirection(DcMotor.Direction.FORWARD);
+        }
+        else {
+            leftMotor.setDirection(DcMotor.Direction.REVERSE);
+        }
+        StopFor = StopForReferences;
+    }
+    protected void MoveMotor(DcMotor LeftDriveMotorReferences, DcMotor RightDriveMotorReferences, Continue StopForReferences, MotorDirection.LeftMotorDirection leftMotorDirection, MotorDirection.RightMotorDirection rightMotorDirection) {
+        leftMotor = LeftDriveMotorReferences;
+        rightMotor = RightDriveMotorReferences;
+        if(leftMotorDirection == MotorDirection.LeftMotorDirection.FORWARD) {
+            leftMotor.setDirection(DcMotor.Direction.FORWARD);
+        }
+        else {
+            leftMotor.setDirection(DcMotor.Direction.REVERSE);
+        }
+        if(rightMotorDirection == MotorDirection.RightMotorDirection.FORWARD) {
+            leftMotor.setDirection(DcMotor.Direction.FORWARD);
+        }
+        else {
+            leftMotor.setDirection(DcMotor.Direction.REVERSE);
+        }
+        StopFor = StopForReferences;
+    }
+
+    /****************************************************************************************/
     /*Forward Methods*/
     //Methods for moveing the robot forward
     //Takes ints double and floats
-    protected void DriveForward(int power, int timeDriven) {
-        leftMotor.setPower(power/100);
-        rightMotor.setPower(power/100);
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    protected void Drive(int power, int timeDriven, Direction dir) {
+        Veribul = Variable.INTEGER;
+        Drive((double) power, (double) timeDriven, Veribul, dir);
     }
-    protected void DriveForward(double power, int timeDriven) {
-        leftMotor.setPower(power);
-        rightMotor.setPower(power);
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
+    protected void Drive(double power, int timeDriven, Direction dir) {
+        Veribul = Variable.DOUBLE;
+        Drive(power, (double) timeDriven, Veribul, dir);
     }
-    protected void DriveForward(int power, double timeDriven) {
-        leftMotor.setPower(power/100);
-        rightMotor.setPower(power/100);
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
+
+    protected void Drive(int power, double timeDriven, Direction dir) {
+        Veribul = Variable.INTEGER;
+        Drive((double) power, timeDriven, Veribul, dir);
     }
-    protected void DriveForward(double power, double timeDriven) {
-        leftMotor.setPower(power);
-        rightMotor.setPower(power);
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
+
+    protected void Drive(float power, int timeDriven, Direction dir) {
+        Veribul = Variable.FLOAT;
+        Drive((double) power, (double) timeDriven, Veribul, dir);
     }
-    protected void DriveForward(float power, int timeDriven) {
-        if(power < 100 || power > 0) {
-            leftMotor.setPower(power);
-            rightMotor.setPower(power);
+
+    protected void Drive(float power, double timeDriven, Direction dir) {
+        Veribul = Variable.FLOAT;
+        Drive((double) power, timeDriven, Veribul, dir);
+    }
+
+    protected void Drive(int power, float timeDriven, Direction dir) {
+        Veribul = Variable.INTEGER;
+        Drive((double) power, (double) timeDriven, Veribul, dir);
+    }
+
+    protected void Drive(double power, float timeDriven, Direction dir) {
+        Veribul = Variable.DOUBLE;
+        Drive(power, (double) timeDriven, Veribul, dir);
+    }
+
+    protected void Drive(double power, double timeDriven, Direction dir) {
+        Veribul = Variable.DOUBLE;
+        Drive(power, timeDriven, Veribul, dir);
+    }
+
+    //****************************************************************//
+    //this section runs the motors for a given time, and will move in the direction given.
+    //dir: A enum that determines the direction the robot will move.
+    //V: A enum that makes sure your varaibls are between two set numbers.
+    //
+    //
+    //
+    private void Drive(double power, double timeDriven, Variable V, Direction dir) {
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        switch (V) {
+            case DOUBLE: {
+                if (power > 1 || power < 0) {
+                    throw new IndexOutOfBoundsException("power must be between 1 and 0, while using doubles");
+                }
+            }
+            case FLOAT: {
+                if (power > 100 || power < 0) {
+                    throw new IndexOutOfBoundsException("power must be between 100 and 0, while using floats");
+                }
+                power = power / 100;
+            }
+            case INTEGER: {
+                if (power > 100 || power < 0) {
+                    throw new IndexOutOfBoundsException("power must be between 100 and 0, while using Integers");
+                }
+                power = power / 100;
+            }
         }
-        else {
-            e.printStackTrace();
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        switch (dir) {
+            case FORWARD: {
+                leftMotor.setPower(power);
+                rightMotor.setPower(power);
+                StopFor.StopFor(timeDriven);
+                leftMotor.setPower(0);
+                rightMotor.setPower(0);
+            }
+            case LEFT: {
+                leftMotor.setPower(-power);
+                rightMotor.setPower(power);
+                StopFor.StopFor(timeDriven);
+                leftMotor.setPower(0);
+                rightMotor.setPower(0);
+            }
+            case RIGHT: {
+                leftMotor.setPower(power);
+                rightMotor.setPower(-power);
+                StopFor.StopFor(timeDriven);
+                leftMotor.setPower(0);
+                rightMotor.setPower(0);
+            }
+            case BACKWARD: {
+                leftMotor.setPower(-power);
+                rightMotor.setPower(-power);
+                StopFor.StopFor(timeDriven);
+                leftMotor.setPower(0);
+                rightMotor.setPower(0);
+            }
         }
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
     }
-    protected void DriveForward(float power, double timeDriven) {
-        if(power < 100 || power > 0) {
-            leftMotor.setPower(power);
-            rightMotor.setPower(power);
-        }
-        else {
-            e.printStackTrace();
-        }
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
+    public enum Direction {
+        FORWARD, RIGHT, LEFT, BACKWARD
+        //enum for MoveMotors, used to assign a direction.
     }
-    protected void DriveForward(int power, float timeDriven) {
-        leftMotor.setPower(power / 100);
-        rightMotor.setPower(power / 100);
-        StopFor.StopFor(timeDriven);
+    public enum Variable {
+        DOUBLE, INTEGER, FLOAT
+        //enum for MoveMotors, used to change varibul numbers.
     }
-    protected void DriveForward(double power, float timeDriven) {
-        leftMotor.setPower(power);
-        rightMotor.setPower(power);
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-/****************************************************************************************/
-    /*TurnRight Methods*/
-    //Methods for moveing the robot to the Right
-    //Takes ints double and floats
-    protected void TurnRight(int power, int timeDriven) {
-    leftMotor.setPower(power/100);
-    rightMotor.setPower(-power/100);
-    StopFor.StopFor(timeDriven);
-    leftMotor.setPower(0);
-    rightMotor.setPower(0);
 }
-    protected void TurnRight(double power, int timeDriven) {
-        leftMotor.setPower(power);
-        rightMotor.setPower(-power);
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-    protected void TurnRight(int power, double timeDriven) {
-        leftMotor.setPower(power/100);
-        rightMotor.setPower(-power/100);
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-    protected void TurnRight(double power, double timeDriven) {
-        leftMotor.setPower(power);
-        rightMotor.setPower(-power);
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-    protected void TurnRight(float power, int timeDriven) {
-        if(power < 100 || power > 0) {
-            leftMotor.setPower(power);
-            rightMotor.setPower(-power);
-        }
-        else {
-            e.printStackTrace();
-        }
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-    protected void TurnRight(float power, double timeDriven) {
-        if(power < 100 || power > 0) {
-            leftMotor.setPower(power);
-            rightMotor.setPower(-power);
-        }
-        else {
-            e.printStackTrace();
-        }
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-    protected void TurnRight(int power, float timeDriven) {
-        leftMotor.setPower(power / 100);
-        rightMotor.setPower(-power / 100);
-        StopFor.StopFor(timeDriven);
-    }
-    protected void TurnRight(double power, float timeDriven) {
-        leftMotor.setPower(power);
-        rightMotor.setPower(-power);
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-/****************************************************************************************/
-    /*TurnLeft Methods*/
-    //Methods for moveing the robot to the Right
-    //Takes ints double and floats
-    protected void TurnLeft(int power, int timeDriven) {
-
-        TurnLeft((double) power, (double) timeDriven);
-    }
-    protected void TurnLeft(double power, int timeDriven) {
-        TurnLeft(power, (double) timeDriven);
-    }
-    protected void TurnLeft(int power, double timeDriven) {
-        TurnLeft((double) power, timeDriven);
-    }
-    protected void TurnLeft(float power, int timeDriven) {
-        TurnLeft((double) power, (double) timeDriven);
-    }
-    protected void TurnLeft(float power, double timeDriven) {
-        TurnLeft((double) power, timeDriven);
-    }
-    protected void TurnLeft(int power, float timeDriven) {
-        TurnLeft((double) power, (double) timeDriven);
-    }
-    protected void TurnLeft(double power, float timeDriven) {
-        TurnLeft( power,(double) timeDriven);
-    }
-    protected void TurnLeft(double power, double timeDriven) {
-        if(power < 100 || power > 0) {
-            leftMotor.setPower(-power);
-            rightMotor.setPower(power);
-        }
-        else {
-            throw new IllegalArgumentException("power greater then 100 or less 0");
-        }
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-    /****************************************************************************************/
-    /*DriveBackwards Methods*/
-    //Methods for moveing the robot to Backwards
-    //Takes ints double and floats
-    protected void DriveBackwards(int power, int timeDriven) {
-        leftMotor.setPower(-power/100);
-        rightMotor.setPower(-power/100);
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-    protected void DriveBackwards(double power, int timeDriven) {
-//        leftMotor.setPower(-power);
-//        rightMotor.setPower(-power);
-//        StopFor.StopFor(timeDriven);
-//        leftMotor.setPower(0);
-//        rightMotor.setPower(0);
-        DriveBackwards(power, (double) timeDriven);
-    }
-    protected void DriveBackwards(int power, double timeDriven) {
-        leftMotor.setPower(-power/100);
-        rightMotor.setPower(-power/100);
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-    protected void DriveBackwards(double power, double timeDriven) {
-        leftMotor.setPower(-power);
-        rightMotor.setPower(-power);
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-    protected void DriveBackwards(float power, int timeDriven) {
-        if(power < 100 || power > 0) {
-            leftMotor.setPower(-power);
-            rightMotor.setPower(-power);
-        }
-        else {
-            e.printStackTrace();
-        }
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-    protected void DriveBackwards(float power, double timeDriven) {
-        if(power < 100 || power > 0) {
-            leftMotor.setPower(-power);
-            rightMotor.setPower(-power);
-        }
-        else {
-            e.printStackTrace();
-        }
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-    protected void DriveBackwards(int power, float timeDriven) {
-        leftMotor.setPower(-power/100);
-        rightMotor.setPower(-power / 100);
-        StopFor.StopFor(timeDriven);
-    }
-    protected void DriveBackwards(double power, float timeDriven) {
-        leftMotor.setPower(-power);
-        rightMotor.setPower(-power);
-        StopFor.StopFor(timeDriven);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-
-}
-
 

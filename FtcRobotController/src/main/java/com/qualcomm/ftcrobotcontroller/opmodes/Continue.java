@@ -1,12 +1,12 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 import static java.lang.Thread.sleep;;
 public abstract class Continue {
-    private int CStopDouble;
-    private String convertionString;
-    private int convertionInteger;
     protected Continue() {
     }
     protected void StopFor(int StopTime) {
+        if(StopTime < 0) {
+            throw new IndexOutOfBoundsException("time can not be less then 0");
+        }
         try {
             sleep(StopTime);
         }
@@ -15,25 +15,15 @@ public abstract class Continue {
         }
     }
     protected void StopFor(double StopTime) {
-        convertionString = Double.toString(StopTime);
-        convertionInteger = Integer.getInteger(convertionString);
-        convertionInteger = convertionInteger * 1000;
-        try {
-            sleep(convertionInteger);
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    if(StopTime < 0) {
+        throw new IndexOutOfBoundsException("time can not be less then 0");
+    }
+        StopFor((int) StopTime);
     }
     protected void StopFor(float StopTime) {
-        convertionString = Float.toString(StopTime);
-        convertionInteger = Integer.getInteger(convertionString);
-        convertionInteger = convertionInteger / 1000;
-        try {
-            sleep(convertionInteger);
+        if(StopTime < 0) {
+            throw new IndexOutOfBoundsException("time can not be less then 0");
         }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        StopFor((int) StopTime);
     }
 }
