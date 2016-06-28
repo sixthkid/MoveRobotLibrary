@@ -1,9 +1,9 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 import static java.lang.Thread.sleep;;
-public abstract class Continue {
-    protected Continue() {
+public class Continue {
+    public Continue() {
     }
-    protected void StopFor(int StopTime) {
+    public void StopFor(int StopTime) {
         if(StopTime < 0) {
             throw new IndexOutOfBoundsException("time can not be less then 0");
         }
@@ -14,13 +14,13 @@ public abstract class Continue {
             e.printStackTrace();
         }
     }
-    protected void StopFor(double StopTime) {
+    public void StopFor(double StopTime) {
     if(StopTime < 0) {
         throw new IndexOutOfBoundsException("time can not be less then 0");
     }
         StopFor((int) StopTime);
     }
-    protected void StopFor(float StopTime) {
+    public void StopFor(float StopTime) {
         if(StopTime < 0) {
             throw new IndexOutOfBoundsException("time can not be less then 0");
         }

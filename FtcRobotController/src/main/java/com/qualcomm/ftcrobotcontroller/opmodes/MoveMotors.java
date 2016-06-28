@@ -16,7 +16,7 @@ public class MoveMotors {
      * @param RightDriveMotorReferences right motor reference
      * @param StopForReferences continue object reference
      */
-    public void MoveMotor(DcMotor LeftDriveMotorReferences, DcMotor RightDriveMotorReferences, Continue StopForReferences) {
+    public MoveMotors(DcMotor LeftDriveMotorReferences, DcMotor RightDriveMotorReferences, Continue StopForReferences) {
         leftMotor = LeftDriveMotorReferences;
         rightMotor = RightDriveMotorReferences;
         StopFor = StopForReferences;
@@ -31,7 +31,7 @@ public class MoveMotors {
      * @param leftMotorRev boolean, when true it sets the left motor to reverse
      * @param rightMotorRev boolean, when true it sets the right motor to reverse
      */
-    public void MoveMotor(DcMotor LeftDriveMotorReferences, DcMotor RightDriveMotorReferences, Continue StopForReferences, boolean leftMotorRev, boolean rightMotorRev) {
+    public MoveMotors(DcMotor LeftDriveMotorReferences, DcMotor RightDriveMotorReferences, Continue StopForReferences, boolean leftMotorRev, boolean rightMotorRev) {
         leftMotor = LeftDriveMotorReferences;
         rightMotor = RightDriveMotorReferences;
         if(leftMotorRev) {
@@ -159,6 +159,40 @@ public class MoveMotors {
         }
     }
 
+    /**
+     * Drive Method without timeDriven, runs the motors forever until the stop method is called.
+     * @param power Sets the power of the motor.
+     * @param dir Sets the direct the robot will go.
+     */
+    public void Drive(double power, Direction dir) {
+        power = power / 100;
+        switch (dir) {
+            case FORWARD: {
+                leftMotor.setPower(power);
+                rightMotor.setPower(power);
+            }
+            case LEFT: {
+                leftMotor.setPower(-power);
+                rightMotor.setPower(power);
+            }
+            case RIGHT: {
+                leftMotor.setPower(power);
+                rightMotor.setPower(-power);
+            }
+            case BACKWARD: {
+                leftMotor.setPower(-power);
+                rightMotor.setPower(-power);
+            }
+        }
+    }
+
+    /**
+     * The stop method stops the motors.
+     */
+    public void stop () {
+        leftMotor.setPower(0);
+        rightMotor.setPower(0);
+    }
     /**
      * the direction the robot will turn.
      */
