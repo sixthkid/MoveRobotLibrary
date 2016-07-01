@@ -24,9 +24,7 @@ public class TestMoveMotors extends LinearOpMode {
         C.StopFor(1000);
         move.Drive(50, 1, MoveMotors.Direction.BACKWARD);
         telemetry.addData("tested all integers movemotor methods with time varibuls", "");
-        C.StopFor(2000);
-
-
+        C.StopFor(5000);
         move.Drive(50, MoveMotors.Direction.FORWARD);
         C.StopFor(1000);
         move.stop();
