@@ -41,10 +41,10 @@ public class MoveMotors {
             leftMotor.setDirection(DcMotor.Direction.FORWARD);
         }
         if(rightMotorRev) {
-            leftMotor.setDirection(DcMotor.Direction.REVERSE);
+            rightMotor.setDirection(DcMotor.Direction.REVERSE);
         }
         else {
-            leftMotor.setDirection(DcMotor.Direction.FORWARD);
+            rightMotor.setDirection(DcMotor.Direction.FORWARD);
         }
         StopFor = StopForReferences;
     }
@@ -134,6 +134,7 @@ public class MoveMotors {
                 StopFor.StopFor(timeDriven);
                 leftMotor.setPower(0);
                 rightMotor.setPower(0);
+                break;
             }
             case LEFT: {
                 leftMotor.setPower(-power);
@@ -141,6 +142,7 @@ public class MoveMotors {
                 StopFor.StopFor(timeDriven);
                 leftMotor.setPower(0);
                 rightMotor.setPower(0);
+                break;
             }
             case RIGHT: {
                 leftMotor.setPower(power);
@@ -148,6 +150,7 @@ public class MoveMotors {
                 StopFor.StopFor(timeDriven);
                 leftMotor.setPower(0);
                 rightMotor.setPower(0);
+                break;
             }
             case BACKWARD: {
                 leftMotor.setPower(-power);
@@ -155,7 +158,9 @@ public class MoveMotors {
                 StopFor.StopFor(timeDriven);
                 leftMotor.setPower(0);
                 rightMotor.setPower(0);
+                break;
             }
+
         }
     }
 
@@ -170,18 +175,22 @@ public class MoveMotors {
             case FORWARD: {
                 leftMotor.setPower(power);
                 rightMotor.setPower(power);
+                break;
             }
             case LEFT: {
                 leftMotor.setPower(-power);
                 rightMotor.setPower(power);
+                break;
             }
             case RIGHT: {
                 leftMotor.setPower(power);
                 rightMotor.setPower(-power);
+                break;
             }
             case BACKWARD: {
                 leftMotor.setPower(-power);
                 rightMotor.setPower(-power);
+                break;
             }
         }
     }
