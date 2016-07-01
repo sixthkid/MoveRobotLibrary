@@ -4,13 +4,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.kauailabs.navx.ftc.AHRS;
 
 public class GyroTurn {
-    private DcMotor leftMotor;
-    private DcMotor rightMotor;
     private AHRS gyro;
     private MoveMotors move;
-    public void GyroTurn(AHRS gyroArg, DcMotor leftMotorArg, DcMotor rightMotorArg, MoveMotors moveArg) {
-        leftMotor = leftMotorArg;
-        rightMotor = rightMotorArg;
+    public void GyroTurn(AHRS gyroArg, MoveMotors moveArg) {
         gyro = gyroArg;
         move = moveArg;
     }
