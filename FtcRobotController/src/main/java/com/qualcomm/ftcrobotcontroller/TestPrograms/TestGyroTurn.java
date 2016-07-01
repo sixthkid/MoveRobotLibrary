@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.kauailabs.navx.ftc.AHRS;
 import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.robocol.Telemetry;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.kauailabs.navx.ftc.AHRS;
 
@@ -26,12 +27,17 @@ public class TestGyroTurn extends LinearOpMode {
         GP = 3;
         gyro = AHRS.getInstance(hardwareMap.deviceInterfaceModule.get("DIM1"), GP, AHRS.DeviceDataType.kProcessedData);
         runtime = new ElapsedTime();
-        move = new MoveMotors(leftMotor, rightMotor, C);
-        gyroT = new GyroTurn(gyro, move);
+        move = new MoveMotors(leftMotor, rightMotor, C, false, true);
+        gyroT = new GyroTurn(gyro, move, telemetry);
+        telemetry.addData("Created gyroturn, continue, ElapsedTime and MoveMotors", "");
         waitForStart();
+        telemetry.addData("turn 90 right start", "");
         gyroT.turnRight(90);
-        C.StopFor(1000);
+        telemetry.addData("turn 90 right finished", "");
+        C.StopFor(4000);
+        telemetry.addData("turn 90 left start", "");
         gyroT.turnLeft(90);
-
+        telemetry.addData("turn 90 left finished", "");
+        //navXGyro
     }
 }

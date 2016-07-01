@@ -2,13 +2,16 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.kauailabs.navx.ftc.AHRS;
+import com.qualcomm.robotcore.robocol.Telemetry;
 
 public class GyroTurn {
     private AHRS gyro;
     private MoveMotors move;
-    public GyroTurn(AHRS gyroArg, MoveMotors moveArg) {
+    private Telemetry tele;
+    public GyroTurn(AHRS gyroArg, MoveMotors moveArg, Telemetry t) {
         gyro = gyroArg;
         move = moveArg;
+        tele = t;
     }
 
     /**
@@ -20,8 +23,9 @@ public class GyroTurn {
         if (degree > 179 || degree < 0) {
             throw new IndexOutOfBoundsException("Degrees must be between 179 and 0.");
         }
-        while(gyro.getYaw() <= degree) {
-            move.Drive(100, MoveMotors.Direction.RIGHT);
+        while(gyro.getYaw() < degree) {
+            move.Drive(50, MoveMotors.Direction.RIGHT);
+            tele.addData("", gyro.getYaw());
         }
         move.stop();
     }
@@ -31,11 +35,12 @@ public class GyroTurn {
      */
     public void turnLeft(int degree) {
         gyro.zeroYaw();
-        if (degree > 179 || degree < 0) {
+        degree = -degree;
+        if (degree < -179 || degree > 0) {
             throw new IndexOutOfBoundsException("Degrees must be between 179 and 0.");
         }
-        while (gyro.getYaw() <= degree) {
-            move.Drive(100, MoveMotors.Direction.LEFT);
+        while (gyro.getYaw() > degree) {
+            move.Drive(50, MoveMotors.Direction.LEFT);
         }
         move.stop();
     }

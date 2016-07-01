@@ -137,16 +137,16 @@ public class MoveMotors {
                 break;
             }
             case LEFT: {
-                leftMotor.setPower(-power);
-                rightMotor.setPower(power);
+                leftMotor.setPower(power);
+                rightMotor.setPower(-power);
                 StopFor.StopFor(timeDriven);
                 leftMotor.setPower(0);
                 rightMotor.setPower(0);
                 break;
             }
             case RIGHT: {
-                leftMotor.setPower(power);
-                rightMotor.setPower(-power);
+                leftMotor.setPower(-power);
+                rightMotor.setPower(power);
                 StopFor.StopFor(timeDriven);
                 leftMotor.setPower(0);
                 rightMotor.setPower(0);
@@ -178,13 +178,13 @@ public class MoveMotors {
                 break;
             }
             case LEFT: {
-                leftMotor.setPower(-power);
-                rightMotor.setPower(power);
+                leftMotor.setPower(power);
+                rightMotor.setPower(-power);
                 break;
             }
             case RIGHT: {
-                leftMotor.setPower(power);
-                rightMotor.setPower(-power);
+                leftMotor.setPower(-power);
+                rightMotor.setPower(power);
                 break;
             }
             case BACKWARD: {
